@@ -9,6 +9,21 @@ int main()
 {
 
     {
+        /* Testing the paramset */
+        std::cout << "TESTING PARAMSET" << std::endl;
+
+        ParamSet<std::string, std::string> ps;
+        ps.add("motor", "200");
+        ps.add("v_max", "300");
+        ps.add("v_min", "50");
+        auto v = ps.find<std::string>("motor", "200");
+        std::cout << typeid(v).name() << std::endl;
+        ps.print();
+
+        return 0;
+    }
+
+    {
         /* Testing the read of XML file */
         
         XMLDocument doc;
@@ -28,23 +43,17 @@ int main()
                 // Compara cada tipo possível
                 if(strcmp(tag,"camera") == 0){
 
-                    ParamSet<std::string, std::string> ps("Camera");
+                    ParamSet<std::string, std::string> ps;
                     // Read each attribs from XML
                     for( auto att = e->FirstAttribute(); att != NULL; att = att->Next()){
                         printf("%s = %s\n", att->Name(), att->Value());
                         ps.add(att->Name(), att->Value());                        
                     }
 
+                    //API::camera(ps);
+
                     ps.print();
 
-
-                    //printf("%s = %s\n", e->FirstAttribute()->Name(),e->FirstAttribute()->Value());
-
-                    
-                    //printf("Atributo = %s\n", e->FirstAttribute()->Next()->Value());
-                    //ps.add()
-
-                    printf("É uma camera\n");
                 }
             }
         
@@ -53,17 +62,6 @@ int main()
             printf("Erro!\n");
         }
 
-    }
-
-    {
-        /* Testing the paramset */
-        std::cout << "TESTING PARAMSET" << std::endl;
-
-        ParamSet<std::string, std::string> ps("Carro");
-        ps.add("motor", "200");
-        ps.add("v_max", "300");
-        ps.add("v_min", "50");
-        ps.print();
     }
     
 }

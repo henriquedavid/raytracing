@@ -1,9 +1,11 @@
-<CG>
-    <home>
+<RT3>
+    <!-- Rendering configuration section starts here -->
+    <world_begin>
+        <!-- World definition section starts here -->
         <camera type="perspective" fovy="45" />
         <cadeira height="150" width="150" />
         <mesa height="200" width="200" />
         <cadeira height="250" width="250" />
         <cadeira height="300" width="300" />
-    </home>
-</CG>
+    </world_begin>
+</RT3>
