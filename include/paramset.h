@@ -19,8 +19,7 @@ class ParamSet
         Data getParam(const Key _k);
         void setParam(const Key _k, const Data _d);
         void print();
-        template <typename Tipo>
-        Tipo find(const Key _k, const Tipo _d );
+        Data find(const Key _k, const Data _d );
 };
 
 #include "paramset.inl"

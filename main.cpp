@@ -8,8 +8,8 @@ using namespace tinyxml2;
 int main()
 {
 
-    {
-        /* Testing the paramset */
+    /*{
+        //Testing the paramset
         std::cout << "TESTING PARAMSET" << std::endl;
 
         ParamSet<std::string, std::string> ps;
@@ -17,12 +17,12 @@ int main()
         ps.add("v_max", "300");
         ps.add("v_min", "50");
         ps.print();
-        auto v = ps.find<int>("motor", 200);
-        //std::cout << typeid(v).name() << std::endl;
+        auto v = ps.find("motor", "200");
+        std::cout << v << std::endl;
         //ps.print();
 
         return 0;
-    }
+    }*/
 
     {
         /* Testing the read of XML file */
