@@ -34,17 +34,19 @@ inline Tipo ParamSet<Key, Data>::find(const Key _k, const Tipo _d ){
     auto valor = componentes[_k];
     std::cout << valor << std::endl;
     
+
     if(valor == ""){
         return _d;
     } else{
+
         std::stringstream conv(valor);
         if(typeid(int) == typeid(Tipo)){
             int valor_ = 0;
             conv >> valor_;
-            return valor_;
+            return (Tipo) valor_;
         }
-        else if(typeid(std::string) == typeid(Tipo)){
-            return valor;
+        else if(typeid(std::string).name() == typeid(Tipo).name()){
+            return (Tipo) valor;
         }
     }
 

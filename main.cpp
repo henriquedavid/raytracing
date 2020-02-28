@@ -13,12 +13,13 @@ int main()
         std::cout << "TESTING PARAMSET" << std::endl;
 
         ParamSet<std::string, std::string> ps;
-        ps.add("motor", "200");
+        ps.add("motor", "400");
         ps.add("v_max", "300");
         ps.add("v_min", "50");
-        auto v = ps.find<std::string>("motor", "200");
-        std::cout << typeid(v).name() << std::endl;
         ps.print();
+        auto v = ps.find<int>("motor", 200);
+        //std::cout << typeid(v).name() << std::endl;
+        //ps.print();
 
         return 0;
     }
