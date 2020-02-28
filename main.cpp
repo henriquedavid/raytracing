@@ -2,6 +2,7 @@
 #include "./lib/tinyxml2/tinyxml2.cpp"
 #include "./include/paramset.h"
 #include <string.h>
+#include <memory>
 
 using namespace tinyxml2;
 
@@ -12,14 +13,24 @@ int main()
         /* Testing the paramset */
         std::cout << "TESTING PARAMSET" << std::endl;
 
-        ParamSet<std::string, std::string> ps;
-        ps.add("motor", "200");
-        ps.add("v_max", "300");
-        ps.add("v_min", "50");
-        auto v = ps.find<std::string>("motor", "200");
-        std::cout << typeid(v).name() << std::endl;
-        ps.print();
+        ParamSet ps;
+        int valor [1] = {200};
+        std::string nome = "motor";
+        size_t size_ = 1;
+        
+        auto valor11 = std::unique_ptr<int []>(valor);
+        auto v = ps.add<int>(nome, std::move(valor11), size_);
+        //std::cout << v << std::endl;
 
+
+        //ps.add("v_max", "300");
+        //ps.add("v_min", "50");
+        //auto v = ps.find<std::string>("motor", "200");
+        //std::cout << typeid(v).name() << std::endl;
+        //ps.print();
+
+
+        std::cout << "SAIU\n";
         return 0;
     }
 
@@ -43,16 +54,16 @@ int main()
                 // Compara cada tipo possível
                 if(strcmp(tag,"camera") == 0){
 
-                    ParamSet<std::string, std::string> ps;
-                    // Read each attribs from XML
-                    for( auto att = e->FirstAttribute(); att != NULL; att = att->Next()){
-                        printf("%s = %s\n", att->Name(), att->Value());
-                        ps.add(att->Name(), att->Value());                        
-                    }
+                    // ParamSet<std::string, std::string> ps;
+                    // // Read each attribs from XML
+                    // for( auto att = e->FirstAttribute(); att != NULL; att = att->Next()){
+                    //     printf("%s = %s\n", att->Name(), att->Value());
+                    //     ps.add(att->Name(), att->Value());                        
+                    // }
 
                     //API::camera(ps);
 
-                    ps.print();
+                    //ps.print();
 
                 }
             }

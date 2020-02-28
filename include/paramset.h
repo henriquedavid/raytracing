@@ -2,25 +2,26 @@
 #define PS
 
 #include <iostream>
+#include <memory>
 #include <string>
-#include <map>
-#include <typeinfo>   // operator typeid
-#include <sstream> 
+#include <unordered_map>
 
-template < typename Key, typename Data >
+using namespace std;
+
 class ParamSet
 {
     private:
-        std::map<Key, Data> componentes;
+        unordered_map< string , unique_ptr<void>> params;
 
     public:
         ParamSet();
-        void add(const Key _k, const Data _d );
-        Data getParam(const Key _k);
-        void setParam(const Key _k, const Data _d);
-        void print();
-        template <typename Tipo>
-        Tipo find(const Key _k, const Tipo _d );
+        ~ParamSet();
+        // Add a list of values of Type T to the dictionary.
+        template < typename T >
+        T add(const string &new_key, unique_ptr<T []> values, size_t size );
+        // Find and return a single item from the ParamSet.
+        template < typename T >
+        const T & find_one(const string &target_key, const T & d) const;
 };
 
 #include "paramset.inl"
