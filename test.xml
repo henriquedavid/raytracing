@@ -1,11 +1,8 @@
 <RT3>
-    <!-- Rendering configuration section starts here -->
-    <world_begin>
-        <!-- World definition section starts here -->
-        <camera type="perspective" fovy="45" />
-        <cadeira height="150" width="150" />
-        <mesa height="200" width="200" />
-        <cadeira height="250" width="250" />
-        <cadeira height="300" width="300" />
-    </world_begin>
+    <camera type="orthographic" />
+    <film type="image" x_res="200" y_res="100" filename="simple_bkg.ppm" img_type="ppm" />
+    <world_begin/>
+        <background type="colors" color="153 204 255"/>
+    <world_end/>
+    <camera type="orthographic" />
 </RT3>

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include <utility> 
 #include <unordered_map>
 
 using namespace std;
@@ -11,7 +12,7 @@ using namespace std;
 class ParamSet
 {
     private:
-        unordered_map< string , unique_ptr<void>> params;
+        unordered_map< string , shared_ptr<void>> params;
 
     public:
         ParamSet();
