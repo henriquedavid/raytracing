@@ -4,5 +4,4 @@
     <world_begin/>
         <background type="colors" color="153 204 255"/>
     <world_end/>
-    <camera type="orthographic" />
 </RT3>

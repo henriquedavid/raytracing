@@ -9,75 +9,50 @@ using namespace tinyxml2;
 
 int main()
 {
-    /*
-    {
-        // Testing the paramset
-        std::cout << "TESTING PARAMSET" << std::endl;
-
-        ParamSet ps;
-        int valor [1] = {200};
-        std::string nome = "motor";
-        size_t size_ = 1;
-        
-        std::cout << "ERR1\n";
-        auto valor11 = std::unique_ptr<int []>(valor);
-        std::cout << "ERR2\n";
-        auto v = ps.add<int>(nome, std::move(valor11), size_);
-        std::cout << "ERR3\n";
-        std::cout << v << std::endl;
-
-
-        std::cout << "END\n";
-
-        return 0;
-    }
-*/
     {
         /* Testing the read of XML file */
 
         XMLDocument doc;
         doc.LoadFile("test.xml");
 
-        // Verificando se ocorreu algum erro ao abrir.
+        // Verift if there isn't no mistake in open file.
         if (!doc.ErrorID())
         {
 
             XMLElement *attr = doc.FirstChildElement();
             //attr = attr->FirstChildElement();
 
-            // Interar sobre os componentes.
+            // Interate over all components/tags.
             for (XMLElement *e = attr->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
             {
                 const char *tag = e->Value();
 
-                std::cout << tag << std::endl;
-
-                // Compara cada tipo possível
+                // Compare each possible type
                 if (strcmp(tag, "camera") == 0)
                 {
                     ParamSet ps;
                     // Read each attribs from XML
                     for (auto att = e->FirstAttribute(); att != NULL; att = att->Next())
                     {
-
-
                         // Get the value of the attribute that are being interated
-                        /*std::string v_ = att->Value();
+                        std::string v_ = att->Value();
+                        // Get the key of attribute
+                        std::string key_ = att->Name();
                          
                         // Inform the number of elements that it's going to be in the array.
-                        int size_element = 1;
+                        int size_elements = 1;
 
                         // Create the vector
-                        auto item_insert = make_unique<std::string []>(1);
-                        // Copy item to the vector                         
-                        item_insert[1] = v_;
-
-                        // Get the key of attribute
-                        string key_ = att->Name();
+                        auto item_insert = make_unique<std::string []>(size_elements);
+                        
+                        // Copy item to the vector
+                        item_insert[0] = v_;
                         
                         //Add element to the ParamSet
-                        //auto a_ = ps.add<std::string>(key_, std::move(item_insert), 0);
-                        std::cout<< "E3\n"; */
+                        ps.add<std::string>(key_, std::move(item_insert), 0);
+
+                        std::string retorno = ps.find_one<std::string>(key_, "ort");
+                        std::cout << retorno << std::endl;
                     }
 
                     //API::camera(ps);
@@ -89,7 +64,6 @@ int main()
                     for (auto att = e->FirstAttribute(); att != NULL; att = att->Next())
                     {
 
-                        std::cout << " -- " << att->Name() << " = " << att->Value() << std::endl;
                     }
                 } else if(strcmp(tag, "world_begin") == 0){
                     // 

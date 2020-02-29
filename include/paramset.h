@@ -19,7 +19,7 @@ class ParamSet
         ~ParamSet();
         // Add a list of values of Type T to the dictionary.
         template < typename T >
-        T add(const string &new_key, unique_ptr<T []> values, size_t size );
+        void add(const string &new_key, unique_ptr<T []> values, size_t size );
         // Find and return a single item from the ParamSet.
         template < typename T >
         const T & find_one(const string &target_key, const T & d) const;
