@@ -9,12 +9,12 @@ using namespace std;
 class Camera{
 
     public:
-        int width;
-        int height;
         string type;
 
         Camera();
-        Camera( int w_, int h_ );
+        Camera( string type_ );
 };
+
+#include "camera.inl"
 
 #endif

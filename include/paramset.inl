@@ -17,7 +17,7 @@ inline void ParamSet::add(const string &new_key, unique_ptr<T[]> values, size_t 
 }
 
 template <typename T>
-inline const T &ParamSet::find_one(const string &target_key, const T &d) const
+inline const T & ParamSet::find_one(const string &target_key, const T &d) const
 {
     unordered_map<string, shared_ptr<void>>::const_iterator params_ = params.find(target_key);
 

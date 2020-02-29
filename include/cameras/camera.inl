@@ -1,11 +1,9 @@
 #include "camera.h"
 
 inline Camera::Camera(){
-    width = 500;
-    height = 500;
+    type="orthographic";
 }
 
-inline Camera::Camera( int w_, int h_ ){
-    width = w_;
-    height = h_;
+inline Camera::Camera( string type_ ){
+    type = type_;
 }
