@@ -10,12 +10,13 @@ class RTH{
     public:
         Camera c;
         Film f;
-        //Background b;
+        Background b;
 
         RTH();
-        RTH(Camera c_, Film f_);
+        RTH(Camera c_, Film f_, Background b_);
         void configureCamera(Camera c_);
-        void configureFilm(Film c_);
+        void configureFilm(Film f_);
+        void configureBackground(Background b_);
 };
 
 #include "rth.inl"

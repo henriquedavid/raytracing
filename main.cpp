@@ -29,12 +29,15 @@ Film createFilm(const ParamSet &ps)
     return film;
 }
 
-void createBackground(const ParamSet &ps)
+Background createBackground(const ParamSet &ps)
 {
     string type = ps.find_one<string>("type", "colors");
     string color = ps.find_one<string>("color", "153 204 255");
-    
+
+    Background bg(type, color);
+    return bg;
 }
+
 
 int main()
 {
@@ -44,12 +47,12 @@ int main()
         XMLDocument doc;
         doc.LoadFile("test.xml");
 
+        // RTH
+        RTH rth;
+
         // Verift if there isn't no mistake in open file.
         if (!doc.ErrorID())
         {
-
-            // RTH
-            RTH rth;
 
             XMLElement *attr = doc.FirstChildElement();
 
@@ -160,7 +163,48 @@ int main()
                         // Evitar inconsistência de dados.
                         e = attr_world;
 
-                        
+                        if (strcmp(tag,"background") == 0)
+                        {
+                            ParamSet ps;
+                            for (auto att = e->FirstAttribute(); att != NULL; att = att->Next())
+                            {
+                                // Get the key of attribute
+                                std::string key_ = att->Name();
+
+                                // Inform the number of elements that it's going to be in the array.
+                                int size_elements = 1;
+
+                                if (key_ == "x_res" || key_ == "y_res")
+                                {
+                                    // Get the value of the attribute that are being interated
+                                    int v_ = att->IntValue();
+
+                                    // Create the vector
+                                    auto item_insert = make_unique<int[]>(size_elements);
+
+                                    // Copy item to the vector
+                                    item_insert[0] = v_;
+
+                                    //Add element to the ParamSet
+                                    ps.add<int>(key_, std::move(item_insert), 0);
+                                }
+                                else
+                                {
+                                    // Get the value of the attribute that are being interated
+                                    std::string v_ = att->Value();
+                                    // Create the vector
+                                    auto item_insert = make_unique<std::string[]>(size_elements);
+
+                                    // Copy item to the vector
+                                    item_insert[0] = v_;
+
+                                    //Add element to the ParamSet
+                                    ps.add<std::string>(key_, std::move(item_insert), 0);
+                                }
+                            }
+
+                            rth.configureBackground(createBackground(ps));
+                        }
                     }
                 }
             }
