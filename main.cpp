@@ -2,6 +2,7 @@
 #include "./lib/tinyxml2/tinyxml2.cpp"
 #include "./include/paramset.h"
 #include "./include/RTH/rth.h"
+#include "./include/vec3/vec3.h"
 #include <string.h>
 #include <memory>
 #include <algorithm>
@@ -31,10 +32,17 @@ Film createFilm(const ParamSet &ps)
 
 Background createBackground(const ParamSet &ps)
 {
-    string type = ps.find_one<string>("type", "colors");
-    string color = ps.find_one<string>("color", "153 204 255");
 
-    Background bg(type, color);
+    string type = ps.find_one<string>("type", "colors");
+    string mapping = ps.find_one<string>("mapping", "scree");
+    string filename = ps.find_one<string>("filename", "none");
+    string color = ps.find_one<string>("color", "0 0 0");
+    string bl = ps.find_one<string>("bl", "0 0 0");
+    string br = ps.find_one<string>("br", "0 0 0");
+    string tl = ps.find_one<string>("tl", "0 0 0");
+    string tr = ps.find_one<string>("tr", "0 0 0");
+
+    Background bg(type, vec3(color));
     return bg;
 }
 
@@ -174,34 +182,18 @@ int main()
                                 // Inform the number of elements that it's going to be in the array.
                                 int size_elements = 1;
 
-                                if (key_ == "x_res" || key_ == "y_res")
-                                {
-                                    // Get the value of the attribute that are being interated
-                                    int v_ = att->IntValue();
+                                // Get the value of the attribute that are being interated
+                                std::string v_ = att->Value();
+                                // Create the vector
+                                auto item_insert = make_unique<std::string[]>(size_elements);
 
-                                    // Create the vector
-                                    auto item_insert = make_unique<int[]>(size_elements);
+                                // Copy item to the vector
+                                item_insert[0] = v_;
 
-                                    // Copy item to the vector
-                                    item_insert[0] = v_;
-
-                                    //Add element to the ParamSet
-                                    ps.add<int>(key_, std::move(item_insert), 0);
-                                }
-                                else
-                                {
-                                    // Get the value of the attribute that are being interated
-                                    std::string v_ = att->Value();
-                                    // Create the vector
-                                    auto item_insert = make_unique<std::string[]>(size_elements);
-
-                                    // Copy item to the vector
-                                    item_insert[0] = v_;
-
-                                    //Add element to the ParamSet
-                                    ps.add<std::string>(key_, std::move(item_insert), 0);
-                                }
+                                //Add element to the ParamSet
+                                ps.add<std::string>(key_, std::move(item_insert), 0);
                             }
+                            
 
                             rth.configureBackground(createBackground(ps));
                         }
@@ -209,7 +201,26 @@ int main()
                 }
             }
 
-            return doc.ErrorID();
+            //return doc.ErrorID();
+
+            // Retrive the image dimensions in pixels.
+            auto w = rth.f.width();
+            auto h = rth.f.height();
+
+
+            for( int j = h-1; j >= 0 ; j-- ){
+                for( int i = 0; i < w; i++ ){
+
+                    // get background color.
+                    auto color = rth.b.sample( float(i)/float(w), float(j)/float(h) );
+                    //color.print();  
+                    rth.f.add(i, j, color);
+
+                }
+            }
+
+
+            rth.f.write_image();
         }
         else
         {

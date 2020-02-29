@@ -20,11 +20,36 @@ inline Film::Film(string type_ , int x_res_, int y_res_, string fn_, string ityp
 
 inline void Film::fill(){
     for(int i = 0 ; i < x_res; i++){
-        vector<int> i_;
+        vector<vec3> i_;
         for(int j = 0 ; j < y_res; j++){
-            i_.push_back(0);
+            i_.push_back(vec3("0 0 0"));
         }
         img.push_back(i_);
     } 
 }
 
+inline void Film::write_image(){
+    ofstream outfile(filename);
+    outfile << "P3\n";
+    outfile << x_res << " " << y_res << "\n";
+    outfile << "255\n";
+    for(int i = 0; i < x_res; i++){
+        for(int j = 0; j < y_res; j++){
+            outfile << img[i][j].x << " " << img[i][j].y << " " << img[i][j].z << "\n";
+        }
+
+        outfile << "\n";
+    }
+}
+
+inline int Film::width(){
+    return x_res;
+}
+
+inline int Film::height(){
+    return y_res;
+}
+
+inline void Film::add(int i, int j, vec3 cor){
+    img[i][j] = cor;
+}

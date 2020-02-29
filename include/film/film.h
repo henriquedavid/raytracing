@@ -4,12 +4,14 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <fstream>
+#include "../vec3/vec3.h"
 
 using namespace std;
 
 class Film{
     public:
-        vector<vector<int>> img;
+        vector<vector<vec3>> img;
         string type;
         int x_res;
         int y_res;
@@ -21,6 +23,11 @@ class Film{
         
         // Fill all the image with 0;
         void fill();
+
+        void write_image();
+        int height();
+        int width();
+        void add(int i, int j, vec3 cor);
 };
 
 #include "film.inl"
