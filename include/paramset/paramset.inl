@@ -1,4 +1,4 @@
-//#include "paramset.h"
+#include "paramset.h"
 
 inline ParamSet::ParamSet()
 {
