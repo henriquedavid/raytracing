@@ -42,7 +42,7 @@ Background createBackground(const ParamSet &ps)
     string tl = ps.find_one<string>("tl", "0 0 0");
     string tr = ps.find_one<string>("tr", "0 0 0");
 
-    Background bg(type, vec3(color));
+    Background bg(type, vec3(color), vec3(bl), vec3(br), vec3(tl), vec3(tr));
     return bg;
 }
 
@@ -212,13 +212,11 @@ int main()
                 for( int i = 0; i < w; i++ ){
 
                     // get background color.
-                    auto color = rth.b.sample( float(i)/float(w), float(j)/float(h) );
-                    //color.print();  
+                    auto color = rth.b.sample( float(i)/float(w), float(j)/float(h), false);
                     rth.f.add(i, j, color);
 
                 }
             }
-
 
             rth.f.write_image();
         }

@@ -33,8 +33,8 @@ inline void Film::write_image(){
     outfile << "P3\n";
     outfile << x_res << " " << y_res << "\n";
     outfile << "255\n";
-    for(int i = 0; i < x_res; i++){
-        for(int j = 0; j < y_res; j++){
+    for(int j = y_res-1; j >= 0; j--){
+        for(int i = 0; i < x_res; i++){
             outfile << img[i][j].x << " " << img[i][j].y << " " << img[i][j].z << "\n";
         }
 
@@ -52,4 +52,8 @@ inline int Film::height(){
 
 inline void Film::add(int i, int j, vec3 cor){
     img[i][j] = cor;
+}
+
+inline vec3 Film::get(int i, int j){
+    return img[i][j];
 }

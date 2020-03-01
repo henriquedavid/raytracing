@@ -23,10 +23,6 @@ inline vec3::vec3(string vec_)
     x = x_;
     y = y_;
     z = z_;
-    if(x != 0){
-        std::cout << "(" << splited[0] << ", " << splited[1] << ", " << splited[2] << ")\n";
-        std::cout << "(" << x << ", " << y << ", " << z << ")\n";
-    }
 }
 
 inline bool vec3::operator!=(const vec3 &v2) const

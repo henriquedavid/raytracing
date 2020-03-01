@@ -40,6 +40,10 @@
         "sstream": "cpp",
         "stdexcept": "cpp",
         "streambuf": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "propagate_const": "cpp",
+        "future": "cpp",
+        "functional": "cpp",
+        "variant": "cpp"
     }
 }

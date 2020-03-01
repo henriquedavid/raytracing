@@ -28,6 +28,7 @@ class Film{
         int height();
         int width();
         void add(int i, int j, vec3 cor);
+        vec3 get(int i, int j);
 };
 
 #include "film.inl"

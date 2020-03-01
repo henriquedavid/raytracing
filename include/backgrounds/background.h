@@ -21,8 +21,11 @@ class Background{
 
 
         Background();
-        Background(string type, vec3 color);
-        vec3 sample(float v1, float v2);
+        Background(string type, vec3 color, vec3 bl_, vec3 br_, vec3 tl_, vec3 tr_);
+        vec3 sample(float v1, float v2, bool cor);
+        vec3 interpolate(float v1, float v2);
+        float RGBtoFloat(int value);
+        float FloattoRGB(float value);
 };
 
 #include "background.inl"
