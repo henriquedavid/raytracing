@@ -14,12 +14,15 @@ The next step of the project, we had to generate an image with just a single bac
 
 All images generated has type ppm, for more performance.
 
+## Compile
+
+`g++ main.cpp -o main`
+
 ## Results
 
 The image with just a single color can be found in `simple_bkg.ppm`; and the image with the four colors gradient in `interpolated_bkg.ppm`.
 
 _The image wasn't posted as img here cause git does't support ppm type._
-
 
 ## Author
 
