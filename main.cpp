@@ -212,7 +212,7 @@ int main()
                 for( int i = 0; i < w; i++ ){
 
                     // get background color.
-                    auto color = rth.b.sample( float(i)/float(w), float(j)/float(h), false);
+                    auto color = rth.b.sample( float(i)/float(w), float(j)/float(h));
                     rth.f.add(i, j, color);
 
                 }

@@ -11,8 +11,8 @@ inline Background::Background( string type_, vec3 color_ , vec3 bl_, vec3 br_, v
     tr = tr_;
 }
 
-inline vec3 Background::sample( float v1, float v2 , bool cor = true){
-    if(cor){
+inline vec3 Background::sample( float v1, float v2){
+    if(!color.isBlack()){
         // Return the value on color
         return color; 
     } else{
