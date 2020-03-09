@@ -46,10 +46,10 @@ Background createBackground(const ParamSet &ps)
     return bg;
 }
 
-void parse( RTH & rth )
+void parse( RTH & rth, char * input_file )
 {
     XMLDocument doc;
-    doc.LoadFile("test.xml");
+    doc.LoadFile(input_file);
 
     
 

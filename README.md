@@ -18,6 +18,10 @@ All images generated has type ppm, for more performance.
 
 `g++ main.cpp -o main`
 
+## Execute
+
+`./main <input_file_name>.xml`
+
 ## Results
 
 The image with just a single color can be found in `simple_bkg.ppm`; and the image with the four colors gradient in `interpolated_bkg.ppm`.
