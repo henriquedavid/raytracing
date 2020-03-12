@@ -22,6 +22,7 @@ class vec3{
         bool operator!=(nullptr_t) const;
         bool isBlack();
         void print();
+        vec3 operator+(const vec3 & v2);
 };
 
 #include "vec3.inl"

@@ -1,0 +1,36 @@
+#ifndef VEC3F_
+#define VEC3F_
+
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <algorithm>
+#include <vector>
+#include <cmath>
+#include <iterator>
+#include "./vec3.h"
+
+using namespace std;
+
+class vec3f{
+    public:
+        float x;
+        float y;
+        float z;
+
+        vec3f();
+        vec3f(string vec_);
+        bool operator!=(const vec3f & v2) const;
+        bool operator!=(nullptr_t) const;
+        bool isBlack();
+        void print();
+        vec3f operator+(const vec3f & v2);
+        vec3f operator*(const float & x);
+        vec3f vec3_to_vec3f(vec3 & v);
+        vec3f normalize(const vec3f & v);
+        
+};
+
+#include "vec3.inl"
+
+#endif
