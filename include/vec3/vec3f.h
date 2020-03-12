@@ -20,6 +20,7 @@ class vec3f{
 
         vec3f();
         vec3f(string vec_);
+        vec3f(float vx, float vy, float vz);
         bool operator!=(const vec3f & v2) const;
         bool operator!=(nullptr_t) const;
         bool isBlack();
@@ -31,6 +32,6 @@ class vec3f{
         
 };
 
-#include "vec3.inl"
+#include "vec3f.inl"
 
 #endif

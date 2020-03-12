@@ -25,6 +25,12 @@ inline vec3f::vec3f(string vec_)
     z = z_/255;
 }
 
+inline vec3f::vec3f(float vx, float vy, float vz){
+    x = vx;
+    y = vy;
+    z = vz;
+}
+
 inline bool vec3f::operator!=(const vec3f &v2) const
 {
     if ((x != v2.x) && (y != v2.y) && (z != v2.z))
@@ -51,23 +57,23 @@ inline void vec3f::print(){
     std::cout << "COR = (" << x << ", " << y << ", " << z << ");\n"; 
 }
 
-inline vec3f operator+(const vec3f & v2){
+inline vec3f vec3f::operator+(const vec3f & v2){
     float v_x = x + v2.x;
     float v_y = y + v2.y;
     float v_z = z + v2.z;
 
-    return vec3(v_x, v_y, v_z);
+    return vec3f(v_x, v_y, v_z);
 }
 
-inline vec3f operator*(const float & value){
+inline vec3f vec3f::operator*(const float & value){
     float v_x = x * value;
     float v_y = y * value;
     float v_z = z * value;
 
-    return vec3(v_x, v_y, v_z);
+    return vec3f(v_x, v_y, v_z);
 }
 
-inline vec3f vec3_to_vec3f(vec3 & v){
+inline vec3f vec3f::vec3_to_vec3f(vec3 & v){
     return vec3f((v.x/255), (v.y/255), (v.z/255));
 }
 
@@ -75,7 +81,7 @@ inline vec3f vec3_to_vec3f(vec3 & v){
  * The ideia here is to normalize the vector using
  * u = v/||v|| <- normalize formula
  */
-inline vec3f normalize(const vec3f & v){
+inline vec3f vec3f::normalize(const vec3f & v){
     float sqr_x = v.x * v.x;
     float sqr_y = v.y * v.y;
     float sqr_z = v.z * v.z;

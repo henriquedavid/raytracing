@@ -1,8 +1,10 @@
+#ifndef RAY_
+#define RAY_
 
-#include "../vec3/vec3.h"
+#include "../vec3/vec3f.h"
 
-using Point3 = vec3;
-using Vector3 = vec3;
+using Point3 = vec3f;
+using Vector3 = vec3f;
 
 class Ray{
     public:
@@ -12,5 +14,7 @@ class Ray{
         Point3 o;   // <- origin
         Vector3 d;  // <- direction
 
-        //Point3 operator()(float t) const { o + d * t; }
+        Point3 operator()(float t) const { (o + d) * t; }
 };
+
+#endif
