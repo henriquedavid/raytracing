@@ -9,12 +9,14 @@ inline Film::Film(){
     fill();
 }
 
-inline Film::Film(string type_ , int x_res_, int y_res_, string fn_, string itype_){
+inline Film::Film(string type_ , int x_res_, int y_res_, string fn_, string itype_, string crop_window_, string gamma_corrected_){
     type = type_;
     x_res = x_res_;
     y_res = y_res_;
     filename = fn_;
     img_type = itype_;
+    crop_window = crop_window_;
+    gamma_corrected = gamma_corrected_;
     fill();
 }
 

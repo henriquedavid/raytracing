@@ -25,10 +25,12 @@ class vec3f{
         bool operator!=(nullptr_t) const;
         bool isBlack();
         void print();
-        vec3f operator+(const vec3f & v2);
-        vec3f operator*(const float & x);
+        vec3f operator+(const vec3f & v2) const;
+        vec3f operator-(const vec3f & v2) const;
+        vec3f operator*(const float & value) const;
+        vec3f operator*(const vec3f & value) const;
         vec3f vec3_to_vec3f(vec3 & v);
-        vec3f normalize(const vec3f & v);
+        vec3f normalize();
         
 };
 

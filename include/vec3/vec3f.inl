@@ -20,9 +20,9 @@ inline vec3f::vec3f(string vec_)
     float z_;
     std::istringstream(splited[2]) >> z_;
 
-    x = x_/255;
-    y = y_/255;
-    z = z_/255;
+    x = x_;
+    y = y_;
+    z = z_;
 }
 
 inline vec3f::vec3f(float vx, float vy, float vz){
@@ -54,10 +54,10 @@ inline bool vec3f::isBlack(){
 }
 
 inline void vec3f::print(){
-    std::cout << "COR = (" << x << ", " << y << ", " << z << ");\n"; 
+    std::cout << "(" << x << ", " << y << ", " << z << ")\n"; 
 }
 
-inline vec3f vec3f::operator+(const vec3f & v2){
+inline vec3f vec3f::operator+(const vec3f & v2) const{
     float v_x = x + v2.x;
     float v_y = y + v2.y;
     float v_z = z + v2.z;
@@ -65,10 +65,26 @@ inline vec3f vec3f::operator+(const vec3f & v2){
     return vec3f(v_x, v_y, v_z);
 }
 
-inline vec3f vec3f::operator*(const float & value){
+inline vec3f vec3f::operator-(const vec3f & v2) const{
+    float v_x = x - v2.x;
+    float v_y = y - v2.y;
+    float v_z = z - v2.z;
+
+    return vec3f(v_x, v_y, v_z);
+}
+
+inline vec3f vec3f::operator*(const float & value) const{
     float v_x = x * value;
     float v_y = y * value;
     float v_z = z * value;
+
+    return vec3f(v_x, v_y, v_z);
+}
+
+inline vec3f vec3f::operator*(const vec3f & value) const{
+    float v_x = y * value.z - z * value.y;
+    float v_y = (-1) * (x * value.z - z * value.x);
+    float v_z = x * value.y - y * value.x;
 
     return vec3f(v_x, v_y, v_z);
 }
@@ -81,16 +97,16 @@ inline vec3f vec3f::vec3_to_vec3f(vec3 & v){
  * The ideia here is to normalize the vector using
  * u = v/||v|| <- normalize formula
  */
-inline vec3f vec3f::normalize(const vec3f & v){
-    float sqr_x = v.x * v.x;
-    float sqr_y = v.y * v.y;
-    float sqr_z = v.z * v.z;
+inline vec3f vec3f::normalize(){
+    float sq_x = x * x;
+    float sq_y = y * y;
+    float sq_z = z * z;
 
-    float root = sqrt( sqr_x + sqr_y + sqr_z);
+    float root = sqrt( sq_x + sq_y + sq_z);
 
-    float r_x = v.x / root;
-    float r_y = v.y / root;
-    float r_z = v.z / root;
+    float r_x = x / root;
+    float r_y = y / root;
+    float r_z = z / root;
 
     return vec3f(r_x, r_y, r_z);
 }

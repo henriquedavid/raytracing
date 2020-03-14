@@ -3,19 +3,60 @@
 #include "../paramset/paramset.h"
 #include "../RTH/rth.h"
 #include "../vec3/vec3.h"
+#include "../vec3/vec4.h"
 #include <string.h>
 #include <memory>
 #include <algorithm>
 
 using namespace tinyxml2;
 using namespace std;
+using Point = vec3f;
 
-Camera createCamera(const ParamSet &ps)
+Camera createCamera(const ParamSet &ps, const ParamSet &lookat)
 {
-    string type = ps.find_one<string>("type", "ortographic");
 
-    Camera camera(type);
-    return camera;
+    string type = ps.find_one<string>("type", "orthographic");
+
+    vec3f look_from(lookat.find_one<string>("look_from", "0 0 0"));
+    vec3f look_at(lookat.find_one<string>("look_at", "0 0 0"));
+    vec3f up(lookat.find_one<string>("up", "0 0 0"));
+
+    vec3f gaze = look_at - look_from;
+
+
+    vec3f w = gaze.normalize(); // left-hand orientation
+
+    vec3f up_v = up * w;
+    vec3f u = up_v.normalize();
+    
+    vec3f w_u = w * u;
+    vec3f v = w_u.normalize();
+    Point e = look_from;
+
+
+    if(type == "orthographic"){
+        float fovy = ps.find_one<float>("fovy", 30.0);
+
+        OrthographicCamera c(fovy);
+        c.type = type;
+        c.w = w;
+        c.u = u;
+        c.v = v;
+        c.e = e;
+        return c;
+    } else{
+        string screen_window = ps.find_one<string>("screen_window", "-5.3 5.3 -4 4");
+        vec4 screen_window_v4(screen_window);
+        PerspectiveCamera c_orthograph;
+        c_orthograph.screen_window = screen_window_v4;
+        c_orthograph.type = type;
+        c_orthograph.w = w;
+        c_orthograph.u = u;
+        c_orthograph.v = v;
+        c_orthograph.e = e;
+
+        return c_orthograph;
+    }
 }
 
 Film createFilm(const ParamSet &ps)
@@ -25,8 +66,10 @@ Film createFilm(const ParamSet &ps)
     int y_res = ps.find_one<int>("y_res", 500);
     string filename = ps.find_one<string>("filename", "out.ppm");
     string img_type = ps.find_one<string>("img_type", "ppm");
+    string crop_window = ps.find_one<string>("crop_window", "0 1 0 1");
+    string gamma_corrected = ps.find_one<string>("gamma_corrected", "yes");
 
-    Film film(type, x_res, y_res, filename, img_type);
+    Film film(type, x_res, y_res, filename, img_type, crop_window, gamma_corrected);
     return film;
 }
 
@@ -51,7 +94,7 @@ void parse( RTH & rth, char * input_file )
     XMLDocument doc;
     doc.LoadFile(input_file);
 
-    
+    ParamSet lookat;    
 
     // Verift if there isn't no mistake in open file.
     if (!doc.ErrorID())
@@ -64,8 +107,37 @@ void parse( RTH & rth, char * input_file )
         {
             const char *tag = e->Value();
 
-            // Compare each possible type
-            if (strcmp(tag, "camera") == 0)
+            
+            // Compare all tags
+
+            // The lookat tag needs to come before the camera's tag
+            if(strcmp(tag, "lookat") == 0){
+                // Read each attribs from XML
+                for (auto att = e->FirstAttribute(); att != NULL; att = att->Next())
+                {
+
+                    // Note that all of the 3 attributes use the same form, so it does't need condiction
+                    // Get the key of attribute
+                    std::string key_ = att->Name();
+
+                    // Inform the number of elements that it's going to be in the array.
+                    // This variable is not being used in the essence of the code.
+                    int size_elements = 1;
+
+                    // Get the value of the attribute that are being interated
+                    std::string v_ = att->Value();
+                    // Create the vector
+                    auto item_insert = make_unique<std::string[]>(size_elements);
+
+                    // Copy item to the vector
+                    item_insert[0] = v_;
+
+                    //Add element to the ParamSet
+                    lookat.add<std::string>(key_, std::move(item_insert), 0);
+                    
+                }
+            }
+            else if (strcmp(tag, "camera") == 0)
             {
                 ParamSet ps;
                 // Read each attribs from XML
@@ -106,7 +178,7 @@ void parse( RTH & rth, char * input_file )
                     }
                 }
 
-                rth.configureCamera(createCamera(ps));
+                rth.configureCamera(createCamera(ps, lookat));
             }
             else if (strcmp(tag, "film") == 0)
             {

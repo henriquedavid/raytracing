@@ -17,9 +17,11 @@ class Film{
         int y_res;
         string filename;
         string img_type;
+        string gamma_corrected;
+        string crop_window;
 
         Film();
-        Film(string type_ , int x_res_, int y_res_, string fn_, string itype_);
+        Film(string type_ , int x_res_, int y_res_, string fn_, string itype_, string crop_window_, string gamma_corrected_);
         
         // Fill all the image with 0;
         void fill();
