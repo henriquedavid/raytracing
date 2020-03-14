@@ -24,7 +24,7 @@ inline float Camera::mappingPixelsToScreenSpace(float pos1, float pos2, float va
 inline Ray Camera::generate_ray(float x, float y, Film &f){
 
     float u_ = mappingPixelsToScreenSpace(screen_window.l, screen_window.r, x, f.x_res);
-    float v_ = mappingPixelsToScreenSpace(screen_window.r, screen_window.b, y, f.y_res);
+    float v_ = mappingPixelsToScreenSpace(screen_window.b, screen_window.t, y, f.y_res);
 
 
     if(type == "orthografic"){

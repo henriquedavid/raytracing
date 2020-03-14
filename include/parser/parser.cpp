@@ -32,12 +32,14 @@ Camera createCamera(const ParamSet &ps, const ParamSet &lookat)
     vec3f w_u = w * u;
     vec3f v = w_u.normalize();
     Point e = look_from;
-
+    
+    string screen_window = ps.find_one<string>("screen_window", "-5.3 5.3 -4 4");
 
     if(type == "orthographic"){
         float fovy = ps.find_one<float>("fovy", 30.0);
 
         OrthographicCamera c(fovy);
+        c.screen_window = screen_window;
         c.type = type;
         c.w = w;
         c.u = u;
@@ -45,10 +47,8 @@ Camera createCamera(const ParamSet &ps, const ParamSet &lookat)
         c.e = e;
         return c;
     } else{
-        string screen_window = ps.find_one<string>("screen_window", "-5.3 5.3 -4 4");
-        vec4 screen_window_v4(screen_window);
         PerspectiveCamera c_orthograph;
-        c_orthograph.screen_window = screen_window_v4;
+        c_orthograph.screen_window = screen_window;
         c_orthograph.type = type;
         c_orthograph.w = w;
         c_orthograph.u = u;

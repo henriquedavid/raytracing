@@ -30,7 +30,7 @@ class Camera{
 class PerspectiveCamera : public Camera{
     public:
 
-        PerspectiveCamera();
+        //PerspectiveCamera();
 };
 
 class OrthographicCamera : public Camera{
