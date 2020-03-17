@@ -1,11 +1,17 @@
 #include <iostream>
 #include "./include/parser/parser.cpp"
 #include "./include/ray/ray.h"
+#include "./include/support.cpp"
 
 using namespace std;
 
 int main( int argc, char** argv)
 {
+    {
+        auto a_ = getPNGImage("play.png");
+        return 0;
+    }
+    
     if(argc != 2){
         cout << "It's necessary inform the input file.\nEX: ./main < inputfile >.xml\n";
         return 0;
