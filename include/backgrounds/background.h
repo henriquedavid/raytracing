@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include "../vec3/vec3.h"
 
@@ -26,6 +27,7 @@ class Background{
         vec3 interpolate(float v1, float v2);
         float RGBtoFloat(int value);
         float FloattoRGB(float value);
+
 };
 
 #include "background.inl"
