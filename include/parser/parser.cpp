@@ -4,7 +4,9 @@
 #include "../RTH/rth.h"
 #include "../vec3/vec3.h"
 #include "../vec3/vec4.h"
+#include "../support.cpp"
 #include <string.h>
+#include <tuple>
 #include <memory>
 #include <algorithm>
 
@@ -23,19 +25,19 @@ Camera createCamera(const ParamSet &ps, const ParamSet &lookat)
 
     vec3f gaze = look_at - look_from;
 
-
     vec3f w = gaze.normalize(); // left-hand orientation
 
     vec3f up_v = up * w;
     vec3f u = up_v.normalize();
-    
+
     vec3f w_u = w * u;
     vec3f v = w_u.normalize();
     Point e = look_from;
-    
+
     string screen_window = ps.find_one<string>("screen_window", "-5.3 5.3 -4 4");
 
-    if(type == "orthographic"){
+    if (type == "orthographic")
+    {
         float fovy = ps.find_one<float>("fovy", 30.0);
 
         OrthographicCamera c(fovy);
@@ -45,17 +47,20 @@ Camera createCamera(const ParamSet &ps, const ParamSet &lookat)
         c.u = u;
         c.v = v;
         c.e = e;
-        return c;
-    } else{
-        PerspectiveCamera c_orthograph;
-        c_orthograph.screen_window = screen_window;
-        c_orthograph.type = type;
-        c_orthograph.w = w;
-        c_orthograph.u = u;
-        c_orthograph.v = v;
-        c_orthograph.e = e;
 
-        return c_orthograph;
+        return c;
+    }
+    else
+    {
+        PerspectiveCamera c_perspective;
+        c_perspective.screen_window = screen_window;
+        c_perspective.type = type;
+        c_perspective.w = w;
+        c_perspective.u = u;
+        c_perspective.v = v;
+        c_perspective.e = e;
+
+        return c_perspective;
     }
 }
 
@@ -84,17 +89,32 @@ Background createBackground(const ParamSet &ps)
     string br = ps.find_one<string>("br", "0 0 0");
     string tl = ps.find_one<string>("tl", "0 0 0");
     string tr = ps.find_one<string>("tr", "0 0 0");
+    auto image = getPNGImage(ps.find_one<string>("filename", "play.png"));
 
-    Background bg(type, vec3(color), vec3(bl), vec3(br), vec3(tl), vec3(tr));
+    vector<vector<vec3>> image_new;
+    int cont = 0;
+
+    for (int i = 0; i < get<2>(image); i++)
+    {
+        vector<vec3> img_y;
+        for (int j = 0; j < get<1>(image); j++)
+        {
+            img_y.push_back(vec3(to_string(int(get<0>(image)[cont])) + " " + to_string(int(get<0>(image)[cont + 1])) + " " + to_string(int(get<0>(image)[cont + 2]))));
+            cont += 4;
+        }
+        image_new.push_back(img_y);
+    }
+
+    Background bg(type, vec3(color), vec3(bl), vec3(br), vec3(tl), vec3(tr), image_new, get<1>(image), get<2>(image));
     return bg;
 }
 
-void parse( RTH & rth, char * input_file )
+void parse(RTH &rth, char *input_file)
 {
     XMLDocument doc;
     doc.LoadFile(input_file);
 
-    ParamSet lookat;    
+    ParamSet lookat;
 
     // Verift if there isn't no mistake in open file.
     if (!doc.ErrorID())
@@ -107,11 +127,11 @@ void parse( RTH & rth, char * input_file )
         {
             const char *tag = e->Value();
 
-            
             // Compare all tags
 
             // The lookat tag needs to come before the camera's tag
-            if(strcmp(tag, "lookat") == 0){
+            if (strcmp(tag, "lookat") == 0)
+            {
                 // Read each attribs from XML
                 for (auto att = e->FirstAttribute(); att != NULL; att = att->Next())
                 {
@@ -134,7 +154,6 @@ void parse( RTH & rth, char * input_file )
 
                     //Add element to the ParamSet
                     lookat.add<std::string>(key_, std::move(item_insert), 0);
-                    
                 }
             }
             else if (strcmp(tag, "camera") == 0)

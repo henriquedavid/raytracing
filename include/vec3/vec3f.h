@@ -12,6 +12,8 @@
 
 using namespace std;
 
+#define PI 3.14159265
+
 class vec3f{
     public:
         float x;
@@ -31,7 +33,7 @@ class vec3f{
         vec3f operator*(const vec3f & value) const;
         vec3f vec3_to_vec3f(vec3 & v);
         vec3f normalize();
-        
+              
 };
 
 #include "vec3f.inl"
