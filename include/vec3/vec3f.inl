@@ -54,7 +54,7 @@ inline bool vec3f::isBlack(){
 }
 
 inline void vec3f::print(){
-    std::cout << "(" << x << ", " << y << ", " << z << ")\n"; 
+    std::cout << "(" << x << ", " << y << ", " << z << ")"; 
 }
 
 inline vec3f vec3f::operator+(const vec3f & v2) const{

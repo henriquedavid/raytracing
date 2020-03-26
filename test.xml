@@ -1,14 +1,14 @@
 <RT3>
-    <lookat look_from="0 4 -11" look_at="0 1 0" up="0 1 0" />
-    <camera type="perspective" fovy="30" />
+    <lookat look_from="0 0 0" look_at="4 -10 10" up="0 1 0" />
+    <camera type="perspective" fovy="110" />
     <!-- The screen_window will default to  "-1.555 1.555 -1 1" /> -->
-    <film type="image" x_res="2800" y_res="1800" crop_window="0 1 0 1"
-        filename="gcodex_matte_ortho.ppm"
-        img_type="ppm"  gamma_corrected="yes" />
+    <film type="image" x_res="800" y_res="800" crop_window="0 1 0 1"
+        filename="spherical.ppm"
+        img_type="ppm"  gamma_corrected="no" />
 
     
     <world_begin/>
-        <background type="colors" color="25 48 66" />
+        <background type="texture" mapping="spherical" filename="grid.png" />
         <!-- Here goes the rest of the file, including scene definition. -->
     <world_end/>
 </RT3>
