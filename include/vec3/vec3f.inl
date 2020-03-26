@@ -97,16 +97,16 @@ inline vec3f vec3f::vec3_to_vec3f(vec3 & v){
  * The ideia here is to normalize the vector using
  * u = v/||v|| <- normalize formula
  */
-inline vec3f vec3f::normalize(){
-    float sq_x = x * x;
-    float sq_y = y * y;
-    float sq_z = z * z;
+// inline vec3f vec3f::normalize(){
+//     float sq_x = x * x;
+//     float sq_y = y * y;
+//     float sq_z = z * z;
 
-    float root = sqrt( sq_x + sq_y + sq_z);
+//     float root = sqrt( sq_x + sq_y + sq_z);
 
-    float r_x = x / root;
-    float r_y = y / root;
-    float r_z = z / root;
+//     float r_x = x / root;
+//     float r_y = y / root;
+//     float r_z = z / root;
 
-    return vec3f(r_x, r_y, r_z);
-}
+//     return vec3f(r_x, r_y, r_z);
+// }

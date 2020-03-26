@@ -7,7 +7,7 @@ using namespace std;
 int main( int argc, char** argv)
 {
     
-    /*if(argc != 2){
+    if(argc != 2){
         cout << "It's necessary inform the input file.\nEX: ./main < inputfile >.xml\n";
         return 0;
     }
@@ -41,5 +41,5 @@ int main( int argc, char** argv)
     }
 
     cout << "Creating image\n";
-    rth.f.write_image();*/
+    rth.f.write_image();
 }

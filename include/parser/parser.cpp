@@ -25,13 +25,13 @@ Camera createCamera(const ParamSet &ps, const ParamSet &lookat)
 
     vec3f gaze = look_at - look_from;
 
-    vec3f w = gaze.normalize(); // left-hand orientation
+    vec3f w = normalize(gaze); // left-hand orientation
 
-    vec3f up_v = up * w;
-    vec3f u = up_v.normalize();
+    //vec3f up_v = up * w;
+    vec3f u = normalize(cross(up,w));
 
-    vec3f w_u = w * u;
-    vec3f v = w_u.normalize();
+    //vec3f w_u = w * u;
+    vec3f v = normalize(cross(w,u));
     Point e = look_from;
 
     string screen_window = ps.find_one<string>("screen_window", "-5.3 5.3 -4 4");
