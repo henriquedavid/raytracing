@@ -30,7 +30,7 @@ int main( int argc, char** argv)
 
             // cout <<  float(i)/float(w) << " e " << float(j)/float(h) << endl;
             
-            Ray r1 = rth.c.generate_ray(float(i)/float(w), float(j)/float(h), rth.f);
+            Ray r1 = rth.c.generate_ray( float(i) / float(w), float(j) / float(h), rth.f);
 
             cout << "Pixel : [" << i << " , " << j << "], ";
             

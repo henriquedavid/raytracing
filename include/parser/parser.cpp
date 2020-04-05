@@ -36,11 +36,10 @@ Camera createCamera(const ParamSet &ps, const ParamSet &lookat)
 
     string screen_window = ps.find_one<string>("screen_window", "-5.3 5.3 -4 4");
 
-    if (type == "orthographic")
+    if (type != "perspective")
     {
-        float fovy = ps.find_one<float>("fovy", 30.0);
 
-        OrthographicCamera c(fovy);
+        OrthographicCamera c;
         c.screen_window = screen_window;
         c.type = type;
         c.w = w;
@@ -52,8 +51,9 @@ Camera createCamera(const ParamSet &ps, const ParamSet &lookat)
     }
     else
     {
-        PerspectiveCamera c_perspective;
-        c_perspective.screen_window = screen_window;
+        float fovy = ps.find_one<float>("fovy", 30.0);
+
+        PerspectiveCamera c_perspective{fovy};
         c_perspective.type = type;
         c_perspective.w = w;
         c_perspective.u = u;

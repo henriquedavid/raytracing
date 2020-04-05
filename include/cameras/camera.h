@@ -30,15 +30,18 @@ class Camera{
 class PerspectiveCamera : public Camera{
     public:
 
-        //PerspectiveCamera();
+        float fovy;
+
+        PerspectiveCamera(){}
+        PerspectiveCamera(float fovy_) : fovy(fovy_){}
+        Ray generate_ray(float x, float y, Film & f);
+
 };
 
 class OrthographicCamera : public Camera{
     public:
-        float fovy;
 
-        OrthographicCamera();
-        OrthographicCamera(float fovy_) : fovy(fovy_){}
+        OrthographicCamera(){}
 };
 
 #include "camera.inl"
